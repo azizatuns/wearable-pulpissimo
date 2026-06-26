@@ -1,6 +1,6 @@
-# NusaCore GUI Framework — Porting & Developer Guide
+# LVGL GUI Framework — Porting & Developer Guide
 
-**Project:** ICDeC RISC-V Wearable (NusaCore / PULPissimo)
+**Project:** ICDeC RISC-V Wearable
 **GUI stack:** LVGL v9 · SDL2 (Linux dev) · RISC-V bare-metal (target)
 
 ---
@@ -40,24 +40,20 @@ platform-independent and never changes between builds.
 ## 2. Project structure
 
 ```
-.
+gui/
 ├── setup.sh               One-shot environment setup
-├── env.sh                 (generated) source before RISC-V builds
-├── app/
-│   ├── lv_conf.h          LVGL v9 config (platform-aware via #ifdef)
-│   ├── main.c             Entry point + UI screens
-│   ├── Makefile           PLATFORM=linux | riscv
-│   ├── libs/
-│   │   └── lvgl/          LVGL v9 source (cloned by setup.sh)
-│   ├── src/
-│   │   ├── display_driver.h / .c   Platform display init
-│   │   ├── input_driver.h  / .c   Platform input init + gesture bridge
-│   │   ├── gesture.h       / .c   Pure-C gesture state machine
-│   └── tests/
-│       ├── test_gesture.c  Unit tests (host, no hardware needed)
-│       └── Makefile
-├── chroot/                RISC-V toolchain (from chroot.tar.gz)
-├── pulp-runtime/          PULPissimo BSP (mentor's fork)
+├── lv_conf.h          LVGL v9 config (platform-aware via #ifdef)
+├── main.c             Entry point + UI screens
+├── Makefile           PLATFORM=linux | riscv
+├── libs/
+│   └── lvgl/          LVGL v9 source (cloned by setup.sh)
+├── src/
+│   ├── display_driver.h / .c   Platform display init
+│   ├── input_driver.h  / .c   Platform input init + gesture bridge
+│   ├── gesture.h       / .c   Pure-C gesture state machine
+├── tests/
+│   ├── test_gesture.c  Unit tests (host, no hardware needed)
+│   └── Makefile
 └── docs/
     └── porting_guide.md   ← this file
 ```
@@ -71,18 +67,16 @@ platform-independent and never changes between builds.
 ```bash
 # Install Linux prerequisites
 sudo apt install build-essential libsdl2-dev git     # Ubuntu/Debian
-sudo pacman -S base-devel sdl2 git                   # CachyOS/Arch
 
-# Run setup (downloads LVGL, extracts chroot, clones pulp-runtime)
-./setup.sh path/to/chroot.tar.gz https://github.com/mentor/pulp-runtime
+# Run setup
+./setup.sh
 ```
 
 ### 3.2 Build and run on Linux (SDL2 window)
 
 ```bash
-cd app
 make PLATFORM=linux
-./gui_app
+./build/gui_app
 ```
 
 You will see a **512 × 256 px SDL window** (4× zoom of the 128 × 64 OLED).  
@@ -118,7 +112,7 @@ echo $?                           # must print 0
 
 ## 4. Connecting the ICDeC hardware modules
 
-When your teammates deliver their OLED and touch modules, plug them in
+To add OLED and touch modules, plug them in
 at **two clearly marked TODO locations**.
 
 ### 4.1 Display — `src/display_driver.c` (RISC-V section)

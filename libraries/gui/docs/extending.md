@@ -427,7 +427,7 @@ while(1) {
 }
 ```
 
-If NusaCore later runs a multi-core configuration with separate sensor
+If the RISC-V board later runs a multi-core configuration with separate sensor
 cores, wrap update calls in an LVGL mutex:
 
 ```c

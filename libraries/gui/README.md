@@ -45,7 +45,6 @@ cd libraries/gui
 
 ### Linux — SDL2 window
 ```bash
-cd app
 make PLATFORM=linux
 ./build/gui_app
 ```
@@ -61,7 +60,7 @@ A **512 × 256 px SDL window** opens (4× zoom of the 128 × 64 OLED).
 
 ### Unit tests — no hardware, no SDL
 ```bash
-cd app/tests
+cd tests
 make
 # Expected: 29 passed, 0 failed, exit code 0
 ```
@@ -72,7 +71,6 @@ make
 riscv32-unknown-elf-gcc --version
 
 # Build:
-cd app
 make PLATFORM=riscv
 echo $?     # must print 0
 
@@ -86,21 +84,18 @@ echo $?     # must print 0
 ```
 gui/
 ├── setup.sh             First-time environment setup
-├── app/
-│   ├── lv_conf.h        LVGL v9 config (platform-aware)
-│   ├── main.c           Entry point + UI screens
-│   ├── Makefile         PLATFORM=linux | riscv
-│   ├── libs/
-│   │   └── lvgl/        LVGL v9 — git submodule, not uploaded
-│   ├── src/
-│   │   ├── display_driver.{h,c}   SDL2 ↔ OLED abstraction
-│   │   ├── input_driver.{h,c}     SDL mouse ↔ touch abstraction
-│   │   └── gesture.{h,c}          Click / double-click / swipe engine
-│   └── tests/
+├── lv_conf.h        LVGL v9 config (platform-aware)
+├── main.c           Entry point + UI screens
+├── Makefile         PLATFORM=linux | riscv
+├── libs/
+│   └── lvgl/        LVGL v9 — git submodule, not uploaded
+├── src/
+│   ├── display_driver.{h,c}   SDL2 ↔ OLED abstraction
+│   ├── input_driver.{h,c}     SDL mouse ↔ touch abstraction
+│   └── gesture.{h,c}          Click / double-click / swipe engine
+├── tests/
 │       ├── test_gesture.c
 │       └── Makefile
-├── chroot/              Toolchain — not in repo (from chroot.tar.xz)
-├── pulp-runtime/        BSP — not in repo (clone separately)
 └── docs/
     ├── porting_guide.md   Platform porting + build instructions
     └── extending.md       Adding inputs, outputs, and UI screens
@@ -123,10 +118,10 @@ git submodule update --init
 
 To update LVGL to a newer v9.x patch:
 ```bash
-cd app/libs/lvgl
+cd libs/lvgl
 git fetch origin
 git checkout release/v9.2   # or a specific tag
-cd ../../..
+cd ../..
 git add app/libs/lvgl
 git commit -m "chore: bump LVGL to v9.2.x"
 ```
