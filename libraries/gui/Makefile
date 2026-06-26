@@ -17,6 +17,8 @@
 
 PLATFORM ?= linux
 
+BUILD_DIR = build
+
 .PHONY: default_target
 default_target: all
 
