@@ -79,7 +79,7 @@ max30102_status_t max30102_init(max30102_t *dev, int i2c_port) {
     i2c_dev_init(&conf);
     conf.id = i2c_port;
     conf.cs = dev->i2c_addr;
-    conf.max_baudrate = 400000;
+    conf.max_baudrate = 100000;;
     
     dev->i2c_dev = (void *)i2c_open(&conf);
     if (!dev->i2c_dev) {
