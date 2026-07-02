@@ -1,6 +1,6 @@
 # LIS3DHTR Accelerometer Driver
 
-I2C driver for the LIS3DHTR 3-axis accelerometer, written for PULPissimo (RISC-V RV32I) using pulp-runtime.
+I2C driver for the LIS3DHTR 3-axis accelerometer, written for PULPissimo using pulp-runtime.
 
 ---
 
